@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> <!-- HTML ডকুমেন্টের ক্যারেক্টার এনকোডিং সেট করা -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- মোবাইল রেসপনসিভ ডিজাইন নিশ্চিত করে -->
+    <title>Simple To-Do List</title> <!-- ব্রাউজার ট্যাবের টাইটেল -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* ফন্ট সেট করা */
+            background: #f9f9f9;
+            /* ব্যাকগ্রাউন্ড কালার */
+            display: flex;
+            /* কন্টেন্টকে সেন্টারে আনতে flex ব্যবহার */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* পুরো স্ক্রিন হাইটে মাঝখানে রাখে */
+        }
+
+        .container {
+            background: white;
+            /* কনটেইনারের ব্যাকগ্রাউন্ড */
+            padding: 20px 30px;
+            /* প্যাডিং */
+            border-radius: 10px;
+            /* গোল কোণা */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* হালকা ছায়া */
+            width: 400px;
+            /* প্রস্থ নির্ধারণ */
+            text-align: center;
+            /* টেক্সট সেন্টারে */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            /* নিচে ফাঁকা জায়গা */
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            /* ইনপুটে প্যাডিং */
+            width: 65%;
+            /* প্রস্থ নির্ধারণ */
+            border: 1px solid #ccc;
+            /* বর্ডার */
+            border-radius: 5px;
+            /* কোণা গোল */
+        }
+
+        button {
+            padding: 10px 15px;
+            /* বাটনে প্যাডিং */
+            background-color: #28a745;
+            /* সবুজ ব্যাকগ্রাউন্ড */
+            color: white;
+            /* টেক্সট সাদা */
+            border: none;
+            /* বর্ডার বাদ */
+            border-radius: 5px;
+            /* কোণা গোল */
+            cursor: pointer;
+            /* হ্যান্ড কার্সর */
+        }
+
+        ul {
+            list-style: none;
+            /* ডিফল্ট বুলেট বাদ */
+            padding: 0;
+            margin: 20px 0;
+            /* উপরে নিচে ফাঁকা জায়গা */
+        }
+
+        li {
+            display: flex;
+            /* টাস্কের ভিতরের এলিমেন্ট গুলো পাশাপাশি রাখে */
+            align-items: center;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 8px;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        li span {
+            flex-grow: 1;
+            /* বাকি জায়গা নেয় */
+            margin-left: 10px;
+            text-align: left;
+        }
+
+        .status {
+            background: #e6f4ea;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"> <!-- অ্যাপের মূল কন্টেইনার -->
+        <h2>✍️ Simple To-Do List</h2> <!-- হেডিং -->
+        <input type="text" id="taskInput" placeholder="Enter a new task..."> <!-- নতুন টাস্ক লিখার ইনপুট -->
+        <button onclick="addTask()">Add Task</button> <!-- বাটনে ক্লিক করলে addTask() ফাংশন কল হবে -->
+        <ul id="taskList">
+            <li style="color:#888;">No tasks yet! Add one above.</li> <!-- ডিফল্ট মেসেজ -->
+        </ul>
+        <div class="status" id="taskStatus">
+            Total Tasks: 0 | Completed: 0 <!-- টাস্ক সংখ্যা দেখায় -->
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
