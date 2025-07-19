@@ -1,128 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8"> <!-- HTML ডকুমেন্টের ক্যারেক্টার এনকোডিং সেট করা -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- মোবাইল রেসপনসিভ ডিজাইন নিশ্চিত করে -->
-    <title>Simple To-Do List</title> <!-- ব্রাউজার ট্যাবের টাইটেল -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            /* ফন্ট সেট করা */
-            background: #f9f9f9;
-            /* ব্যাকগ্রাউন্ড কালার */
-            display: flex;
-            /* কন্টেন্টকে সেন্টারে আনতে flex ব্যবহার */
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            /* পুরো স্ক্রিন হাইটে মাঝখানে রাখে */
-        }
-
-        .container {
-            background: white;
-            /* কনটেইনারের ব্যাকগ্রাউন্ড */
-            padding: 20px 30px;
-            /* প্যাডিং */
-            border-radius: 10px;
-            /* গোল কোণা */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* হালকা ছায়া */
-            width: 400px;
-            /* প্রস্থ নির্ধারণ */
-            text-align: center;
-            /* টেক্সট সেন্টারে */
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            /* নিচে ফাঁকা জায়গা */
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            /* ইনপুটে প্যাডিং */
-            width: 65%;
-            /* প্রস্থ নির্ধারণ */
-            border: 1px solid #ccc;
-            /* বর্ডার */
-            border-radius: 5px;
-            /* কোণা গোল */
-        }
-
-        button {
-            padding: 10px 15px;
-            /* বাটনে প্যাডিং */
-            background-color: #28a745;
-            /* সবুজ ব্যাকগ্রাউন্ড */
-            color: white;
-            /* টেক্সট সাদা */
-            border: none;
-            /* বর্ডার বাদ */
-            border-radius: 5px;
-            /* কোণা গোল */
-            cursor: pointer;
-            /* হ্যান্ড কার্সর */
-        }
-
-        ul {
-            list-style: none;
-            /* ডিফল্ট বুলেট বাদ */
-            padding: 0;
-            margin: 20px 0;
-            /* উপরে নিচে ফাঁকা জায়গা */
-        }
-
-        li {
-            display: flex;
-            /* টাস্কের ভিতরের এলিমেন্ট গুলো পাশাপাশি রাখে */
-            align-items: center;
-            justify-content: space-between;
-            margin: 8px 0;
-            padding: 8px;
-            background: #f1f1f1;
-            border-radius: 5px;
-        }
-
-        li span {
-            flex-grow: 1;
-            /* বাকি জায়গা নেয় */
-            margin-left: 10px;
-            text-align: left;
-        }
-
-        .status {
-            background: #e6f4ea;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List with Reminder & Edit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+    }
+    input[type="text"], input[type="date"], input[type="time"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px 5px 10px 0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .add-btn { background: #28a745; color: white; }
+    .edit-btn { background: #007bff; color: white; }
+    .delete-btn { background: #dc3545; color: white; }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #f1f1f1;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task-info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+    .status {
+      background: #e6f4ea;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container"> <!-- অ্যাপের মূল কন্টেইনার -->
-        <h2>✍️ Simple To-Do List</h2> <!-- হেডিং -->
-        <input type="text" id="taskInput" placeholder="Enter a new task..."> <!-- নতুন টাস্ক লিখার ইনপুট -->
-        <button onclick="addTask()">Add Task</button> <!-- বাটনে ক্লিক করলে addTask() ফাংশন কল হবে -->
-        <ul id="taskList">
-            <li style="color:#888;">No tasks yet! Add one above.</li> <!-- ডিফল্ট মেসেজ -->
-        </ul>
-        <div class="status" id="taskStatus">
-            Total Tasks: 0 | Completed: 0 <!-- টাস্ক সংখ্যা দেখায় -->
-        </div>
-    </div>
+  <div class="container">
+    <h2>📝 To-Do List</h2>
+    <input type="text" id="taskInput" placeholder="Enter task">
+    <input type="date" id="remDate">
+    <input type="time" id="remTime">
+    <button class="add-btn" onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+    <div class="status" id="taskStatus">Total Tasks: 0 | Completed: 0</div>
+  </div>
 
-    <script src="index.js"></script>
+  <script>
+    const taskList = document.getElementById("taskList");
+    const taskStatus = document.getElementById("taskStatus");
+    const taskInput = document.getElementById("taskInput");
+    const remDate = document.getElementById("remDate");
+    const remTime = document.getElementById("remTime");
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let editIndex = -1;
+
+    Notification.requestPermission();
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      const date = remDate.value;
+      const time = remTime.value;
+      const reminder = date && time ? `${date}T${time}` : null;
+
+      if (text) {
+        if (editIndex === -1) {
+          tasks.push({ text, completed: false, reminder });
+        } else {
+          tasks[editIndex] = { ...tasks[editIndex], text, reminder };
+          editIndex = -1;
+        }
+        taskInput.value = "";
+        remDate.value = "";
+        remTime.value = "";
+        updateStorage();
+        renderTasks();
+        if (reminder) scheduleReminder(text, new Date(reminder));
+      }
+    }
+
+    function editTask(index) {
+      const task = tasks[index];
+      taskInput.value = task.text;
+      if (task.reminder) {
+        const dt = new Date(task.reminder);
+        remDate.value = dt.toISOString().slice(0, 10);
+        remTime.value = dt.toTimeString().slice(0, 5);
+      }
+      editIndex = index;
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      updateStorage();
+      renderTasks();
+    }
+
+    function updateStorage() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function scheduleReminder(text, time) {
+      const now = new Date();
+      const diff = time - now;
+      if (diff > 0) {
+        setTimeout(() => {
+          if (Notification.permission === "granted") {
+            new Notification("Reminder", { body: `Task: ${text}` });
+          } else {
+            alert(`Reminder: ${text}`);
+          }
+        }, diff);
+      }
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = "";
+      let completed = 0;
+      tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+
+        const header = document.createElement("div");
+        header.className = "task-header";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed;
+        checkbox.onchange = () => {
+          tasks[index].completed = checkbox.checked;
+          updateStorage();
+          renderTasks();
+        };
+
+        const span = document.createElement("span");
+        span.textContent = task.text;
+        if (task.completed) {
+          span.style.textDecoration = "line-through";
+          completed++;
+        }
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.className = "edit-btn";
+        editBtn.onclick = () => editTask(index);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.className = "delete-btn";
+        deleteBtn.onclick = () => deleteTask(index);
+
+        header.appendChild(checkbox);
+        header.appendChild(span);
+        header.appendChild(editBtn);
+        header.appendChild(deleteBtn);
+
+        const info = document.createElement("div");
+        info.className = "task-info";
+        info.textContent = task.reminder ? `Reminder: ${new Date(task.reminder).toLocaleString()}` : "";
+
+        li.appendChild(header);
+        li.appendChild(info);
+        taskList.appendChild(li);
+
+        if (task.reminder) scheduleReminder(task.text, new Date(task.reminder));
+      });
+      taskStatus.textContent = `Total Tasks: ${tasks.length} | Completed: ${completed}`;
+    }
+
+    renderTasks();
+  </script>
 </body>
-
 </html>
